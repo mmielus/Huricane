@@ -2,21 +2,13 @@ package DesktopPanel;
 
 import javax.swing.JFrame;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.EventQueue;
 import java.awt.image.BufferStrategy;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 
 public class DesktopPanel extends JFrame {
-    public Tree forest[][] = new Tree[800][600];
+    public TreeModel forest[][] = new TreeModel[800][600];
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
     private Canvas render;
@@ -54,7 +46,7 @@ public class DesktopPanel extends JFrame {
      * @param y wspolrzedna
      */
     public void addTree(int x, int y) {
-        forest[x][y] = (new Tree(x, y, 5, 5, Color.GREEN));
+        forest[x][y] = (new TreeModel(x, y));
     }
 
     /**
@@ -63,7 +55,7 @@ public class DesktopPanel extends JFrame {
      * @param g2d
      */
     public void renderForest(Graphics2D g2d) {
-        Tree tree = null;
+        TreeModel tree = null;
         for (int i = 0; i < 800; i++)
             for (int j = 0; j < 600; j++)
                 if (forest[i][j] != null) {
@@ -107,11 +99,29 @@ public class DesktopPanel extends JFrame {
     }
 
     /**
+     * tymczasowa metoda do przeitorowania po wszystkich drzewach
+     * sprawdza ich stan przy okreslonej predkosci wiatru
+     */
+    public void simulate() {
+        makeForest();
+        render();
+
+        for (int i = 0; i < 800; i++) {
+            for (int j = 0; j < 600; j++) {
+                if (forest[i][j] != null) {
+                    forest[i][j].interact(test.getWindSpeed());
+                    render();
+                }
+            }
+        }
+    }
+
+    /**
      *
      */
     public void loop() {
         Random generator = new Random();
-        Tree tree = null;
+        TreeModel tree = null;
         makeForest();
         while (true) {
 
@@ -126,7 +136,7 @@ public class DesktopPanel extends JFrame {
                 for (int i = 0; i < 580; i++) {
                     if (forest[a][i + 2] != null) {
                         tree = forest[a][i + 2];
-                        tree.changeColor(Color.red);
+                        tree.interact(test.getWindSpeed());
                     }
                 }
             }

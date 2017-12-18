@@ -2,7 +2,7 @@ package Components;
 
 import java.awt.*;
 
-class Tree {
+public class Tree {
 
     private static double STANDARD_GRAVITY = 9.80665; // g - przyspieszenie ziemskie
     private static double AIR_DENSITY = 1.226; // gestosc powierza
@@ -60,8 +60,8 @@ class Tree {
                 treeResistance = getTreeResistance(),
                 rootResistance = getRootResistance();
 
-        System.out.println(
-                String.format("bending: %f tree res: %f root res: %f", bendingMoment, treeResistance, rootResistance));
+//        System.out.println(
+//                String.format("bending: %f tree res: %f root res: %f", bendingMoment, treeResistance, rootResistance));
 
         //napisz mnie ladnie plsss
         if (bendingMoment > treeResistance && bendingMoment > rootResistance)

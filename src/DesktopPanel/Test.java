@@ -7,8 +7,7 @@ public class Test {
        {
 
                 DesktopPanel panel =new DesktopPanel();
-
-                panel.loop();
+                panel.simulate();
             }
 
     }
