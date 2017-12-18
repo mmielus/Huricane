@@ -15,8 +15,7 @@ class Tree {
                 double moe, double mor,
                 double rootMass, double rootDepth,
                 double massSoilRatio) {
-        this.x = x;
-        this.y = y;
+
         this.height = height;
         this.crownCenterHeight = crownCenterHeight;
         this.area = area;
@@ -31,7 +30,7 @@ class Tree {
     }
 
     public enum TreeState {
-        OK, BROKEN, FALLEN
+        OK, BROKEN, FALLEN, BOTH
     }
 
     private int x;
@@ -64,11 +63,16 @@ class Tree {
         System.out.println(
                 String.format("bending: %f tree res: %f root res: %f", bendingMoment, treeResistance, rootResistance));
 
-        if (bendingMoment > rootResistance)
-            return TreeState.FALLEN;
+        //napisz mnie ladnie plsss
+        if (bendingMoment > treeResistance && bendingMoment > rootResistance)
+            return TreeState.BOTH;
 
         if (bendingMoment > treeResistance)
             return TreeState.BROKEN;
+
+        if (bendingMoment > rootResistance)
+            return TreeState.FALLEN;
+
 
         return TreeState.OK;
     }
