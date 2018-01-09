@@ -2,6 +2,7 @@ package DesktopPanel;
 
 import Components.Tree;
 import Components.TreeFactory;
+import Components.TreeType;
 
 import java.awt.*;
 
@@ -10,13 +11,13 @@ public class TreeModel {
     private int x;
     private int y;
 
-    private Components.Tree tree = TreeFactory.getTree();
+    private Components.Tree tree;
     private Color color;
 
-    public TreeModel(int x, int y) {
-
+    public TreeModel(int x, int y, TreeType type) {
         this.x=x;
         this.y=y;
+        this.tree = TreeFactory.getTree(type);
         this.color = Color.GREEN;
     }
 

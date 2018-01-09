@@ -1,6 +1,7 @@
 package Components;
 
 public class TreeBuilder {
+    private TreeType type;
     private int x;
     private int y;
     private double height;
@@ -15,13 +16,8 @@ public class TreeBuilder {
     private double rootDepth;
     private double massSoilRatio;
 
-    public TreeBuilder setX(int x) {
-        this.x = x;
-        return this;
-    }
-
-    public TreeBuilder setY(int y) {
-        this.y = y;
+    public TreeBuilder setType(TreeType type) {
+        this.type = type;
         return this;
     }
 
@@ -81,13 +77,14 @@ public class TreeBuilder {
     }
 
     public Tree createTree() {
-        return new Tree(x, y,
+        return new Tree(
                 height, crownCenterHeight,
                 area, diameter,
                 friction,
                 crownMass,
                 moe, mor,
                 rootMass, rootDepth,
-                massSoilRatio);
+                massSoilRatio,
+                type);
     }
 }

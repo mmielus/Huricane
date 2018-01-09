@@ -1,20 +1,24 @@
 package Components;
 
 import java.awt.*;
+import java.text.MessageFormat;
+import java.util.logging.Logger;
 
 public class Tree {
+
+    private static final Logger LOGGER = Logger.getLogger("Log");
 
     private static double STANDARD_GRAVITY = 9.80665; // g - przyspieszenie ziemskie
     private static double AIR_DENSITY = 1.226; // gestosc powierza
 
-    public Tree(int x, int y,
-                double height, double crownCenterHeight,
+    public Tree(double height, double crownCenterHeight,
                 double area, double diameter,
                 double friction,
                 double crownMass,
                 double moe, double mor,
                 double rootMass, double rootDepth,
-                double massSoilRatio) {
+                double massSoilRatio,
+                TreeType type) {
 
         this.height = height;
         this.crownCenterHeight = crownCenterHeight;
@@ -27,14 +31,14 @@ public class Tree {
         this.rootMass = rootMass;
         this.rootDepth = rootDepth;
         this.massSoilRatio = massSoilRatio;
+        this.type = type;
     }
 
     public enum TreeState {
         OK, BROKEN, FALLEN, BOTH
     }
 
-    private int x;
-    private int y;
+    private TreeType type;
 
     private double height; // wysokosc drzewa
     private double crownCenterHeight; // wysokosc srodka korony
@@ -59,22 +63,24 @@ public class Tree {
         double bendingMoment = getBendingMoment(airVelocity),
                 treeResistance = getTreeResistance(),
                 rootResistance = getRootResistance();
+        TreeState state = TreeState.OK;
 
-//        System.out.println(
-//                String.format("bending: %f tree res: %f root res: %f", bendingMoment, treeResistance, rootResistance));
-
-        //napisz mnie ladnie plsss
         if (bendingMoment > treeResistance && bendingMoment > rootResistance)
-            return TreeState.BOTH;
+            state =  TreeState.BOTH;
 
         if (bendingMoment > treeResistance)
-            return TreeState.BROKEN;
+            state =  TreeState.BROKEN;
 
         if (bendingMoment > rootResistance)
-            return TreeState.FALLEN;
+            state =  TreeState.FALLEN;
 
+        if (state != TreeState.OK)
+            LOGGER.info(MessageFormat.format("{0} height: {1} - status: {2} |" +
+                            "bending: {3}, tree res: {4}, root res: {5}",
+                    this.type, this.height, state,
+                    bendingMoment, treeResistance, rootResistance));
 
-        return TreeState.OK;
+        return state;
     }
 
     /**
@@ -85,8 +91,6 @@ public class Tree {
                 verticalForce = getVerticalResistance(),
                 treeTopTilt = getTreeTopTilt(velocity, horizontalForce);
 
-        System.out.println(
-                String.format("horizontal: %f vertical: %f tilt: %f", horizontalForce, verticalForce, treeTopTilt));
         return horizontalForce + (verticalForce * treeTopTilt);
     }
 
