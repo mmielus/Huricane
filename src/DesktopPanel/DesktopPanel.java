@@ -1,6 +1,7 @@
 package DesktopPanel;
 
 import Components.TreeType;
+import Components.Vortex;
 
 import javax.swing.JFrame;
 import java.awt.*;
@@ -16,6 +17,8 @@ public class DesktopPanel extends JFrame {
 
     private final static Random generator = new Random();
     public TreeModel forest[][] = new TreeModel[800][600];
+    // TODO unmock
+    public Vortex hurricane = new Vortex(1,1,45,100,30,30,10);
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
     private Canvas render;
@@ -134,14 +137,28 @@ public class DesktopPanel extends JFrame {
         makeForest();
         render();
 
-        for (int i = 0; i < 800; i++) {
-            for (int j = 0; j < 600; j++) {
-                if (forest[i][j] != null) {
-                    forest[i][j].interact(test.getWindSpeed());
-                    render();
+        while (!outOfBounds(hurricane.getCenter())) {
+
+            for (int i = 0; i < 800; i++) {
+                for (int j = 0; j < 600; j++) {
+                    if (forest[i][j] != null) {
+                        forest[i][j].interact(hurricane.getV(i, j));
+                    }
                 }
             }
+
+            render();
+            hurricane.recalculateCenter();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private boolean outOfBounds(Point point) {
+        return point.getX() > 800 || point.getY() > 600;
     }
 
     /**

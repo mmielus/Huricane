@@ -11,23 +11,8 @@ public class Test {
 
         Logger logger = Logger.getLogger("Log");
         logger.info("Rozpoczeto symulacje");
-        FileHandler fh;
         DesktopPanel panel =new DesktopPanel();
         panel.simulate();
-
-        try {
-
-            fh = new FileHandler("symulacja.log"); // jak cos to nie dziala
-            logger.addHandler(fh);
-            SimpleFormatter formatter = new SimpleFormatter();
-            fh.setFormatter(formatter);
-
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }
 

@@ -1,6 +1,5 @@
 package Components;
 
-import java.awt.*;
 import java.text.MessageFormat;
 import java.util.logging.Logger;
 
@@ -39,6 +38,7 @@ public class Tree {
     }
 
     private TreeType type;
+    private TreeState state = TreeState.OK;
 
     private double height; // wysokosc drzewa
     private double crownCenterHeight; // wysokosc srodka korony
@@ -54,19 +54,27 @@ public class Tree {
     private double rootDepth; // glebokosc korzenia
     private double massSoilRatio; // stosunek wagi gleby do masy drzewa
 
+    public TreeState getState() {
+        return state;
+    }
+
+    public void interact(double airVelocity) {
+        if (this.state == TreeState.FALLEN || this.state == TreeState.BROKEN)
+            return;
+
+        this.state = calculateState(airVelocity);
+    }
+
     /**
      * Drzewo zostanie zlamane gdy całkowity moment ugiecia drzewa przekroczy wytrzymałosc pnia
      * lub wyrwane gdy moment ugiecia przekroczy wytrzymałosc korzenia
      * @param airVelocity   predkosc powietrza
      */
-    public TreeState getState(double airVelocity) {
+    private TreeState calculateState(double airVelocity) {
         double bendingMoment = getBendingMoment(airVelocity),
                 treeResistance = getTreeResistance(),
                 rootResistance = getRootResistance();
         TreeState state = TreeState.OK;
-
-        if (bendingMoment > treeResistance && bendingMoment > rootResistance)
-            state =  TreeState.BOTH;
 
         if (bendingMoment > treeResistance)
             state =  TreeState.BROKEN;

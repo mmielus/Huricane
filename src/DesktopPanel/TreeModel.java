@@ -29,9 +29,8 @@ public class TreeModel {
     }
 
     public void interact(double windSpeed) {
-        Tree.TreeState state = this.tree.getState(windSpeed);
-
-        switch (state) {
+        this.tree.interact(windSpeed);
+        switch (this.tree.getState()) {
             case BROKEN: this.color = Color.YELLOW;
                 break;
             case FALLEN: this.color = Color.RED;
