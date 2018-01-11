@@ -1,4 +1,4 @@
-package Components;
+package Tree;
 
 public class TreeBuilder {
     private TreeType type;

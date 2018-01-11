@@ -1,8 +1,8 @@
-package DesktopPanel;
+package Tree;
 
-import Components.Tree;
-import Components.TreeFactory;
-import Components.TreeType;
+import Tree.Tree;
+import Tree.TreeFactory;
+import Tree.TreeType;
 
 import java.awt.*;
 
@@ -11,7 +11,7 @@ public class TreeModel {
     private int x;
     private int y;
 
-    private Components.Tree tree;
+    private Tree tree;
     private Color color;
 
     public TreeModel(int x, int y, TreeType type) {
@@ -31,7 +31,7 @@ public class TreeModel {
     public void interact(double windSpeed) {
         this.tree.interact(windSpeed);
         switch (this.tree.getState()) {
-            case BROKEN: this.color = Color.YELLOW;
+            case BROKEN: this.color = Color.BLUE;
                 break;
             case FALLEN: this.color = Color.RED;
                 break;

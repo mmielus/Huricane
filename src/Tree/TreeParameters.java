@@ -1,12 +1,12 @@
-package Components;
+package Tree;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static Components.TreeParameters.TreeParameter.*;
-import static Components.TreeType.PINE;
-import static Components.TreeType.SPRUCE;
+import static Tree.TreeParameters.TreeParameter.*;
+import static Tree.TreeType.PINE;
+import static Tree.TreeType.SPRUCE;
 
 /**
  *  Wartosci parametrow z tabelki

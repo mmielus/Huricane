@@ -1,11 +1,11 @@
-package Components;
+package Tree;
 
-import Components.TreeParameters.TreeParameter;
+import Tree.TreeParameters.TreeParameter;
 
 import java.util.Map;
 import java.util.Random;
 
-import static Components.TreeParameters.TreeParameter.*;
+import static Tree.TreeParameters.TreeParameter.*;
 
 public class TreeFactory {
 

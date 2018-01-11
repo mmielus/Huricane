@@ -1,33 +1,31 @@
-package DesktopPanel;
+package Panels;
 
-import Components.TreeType;
+import Forest.ForestType;
+import Tree.TreeModel;
+import Tree.TreeType;
 import Components.Vortex;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JPanel;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-public class DesktopPanel extends JFrame {
+public class SimulatePanel extends JFrame {
 
-    public enum ForestType {
-        PINE, SPRUCE, MIXED
-    }
 
     private final static Random generator = new Random();
     public TreeModel forest[][] = new TreeModel[800][600];
     // TODO unmock
-    public Vortex hurricane = new Vortex(1,1,45,100,30,30,10);
+    public Vortex hurricane = new Vortex(1, 1, 45, 100, 30, 30, 10);
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
     private Canvas render;
     private int lit = 1;
     private int mnoz = 1;
-    public ButtonTest test = new ButtonTest();
+    public CalibrationPanel test = new CalibrationPanel();
 
 
-    public DesktopPanel() {
+    public SimulatePanel() {
 
         super();
         setTitle("Hurricane");
@@ -38,13 +36,10 @@ public class DesktopPanel extends JFrame {
         setLayout(new BorderLayout());
         setBounds(50, 50, 800, 600);
         render.setBounds(50, 50, 800, 600);
-        JPanel panel = new ButtonPanel();
-        panel.setIgnoreRepaint(true);
-        panel.setBounds(700, 100, 100, 100);
         add(render, BorderLayout.WEST);
         pack();
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         render.createBufferStrategy(2);
         bufferstrat = render.getBufferStrategy();
     }
@@ -55,9 +50,9 @@ public class DesktopPanel extends JFrame {
      * @param x wspolrzedna
      * @param y wspolrzedna
      */
-    public void addTree(int x, int y) {
+    public void addTree(int x, int y, ForestType forestType) {
         // TODO odhardkodowac
-        forest[x][y] = createTree(x, y, ForestType.MIXED);
+        forest[x][y] = createTree(x, y, forestType);
     }
 
     private TreeModel createTree(int x, int y, ForestType type) {
@@ -97,8 +92,8 @@ public class DesktopPanel extends JFrame {
 
     }
 
-    /** Metoda tworzaca las
-     *
+    /**
+     * Metoda tworzaca las
      */
     public void makeForest() {
         Random generator = new Random();
@@ -107,7 +102,7 @@ public class DesktopPanel extends JFrame {
             System.out.println(test.forestDensity);
         }
         while (l < test.getForestDensity()) {
-            addTree(generator.nextInt(800), generator.nextInt(600));
+            addTree(generator.nextInt(800), generator.nextInt(600), test.getForestType());
             l++;
         }
     }
