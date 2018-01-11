@@ -1,14 +1,24 @@
 package DesktopPanel;
 
+import Components.TreeType;
+import Components.Vortex;
+
 import javax.swing.JFrame;
 import java.awt.*;
 import javax.swing.JPanel;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
-
 public class DesktopPanel extends JFrame {
+
+    public enum ForestType {
+        PINE, SPRUCE, MIXED
+    }
+
+    private final static Random generator = new Random();
     public TreeModel forest[][] = new TreeModel[800][600];
+    // TODO unmock
+    public Vortex hurricane = new Vortex(1,1,45,100,30,30,10);
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
     private Canvas render;
@@ -46,7 +56,28 @@ public class DesktopPanel extends JFrame {
      * @param y wspolrzedna
      */
     public void addTree(int x, int y) {
-        forest[x][y] = (new TreeModel(x, y));
+        // TODO odhardkodowac
+        forest[x][y] = createTree(x, y, ForestType.MIXED);
+    }
+
+    private TreeModel createTree(int x, int y, ForestType type) {
+        TreeType treeType;
+        switch (type) {
+            case PINE:
+                treeType = TreeType.PINE;
+                break;
+            case SPRUCE:
+                treeType = TreeType.SPRUCE;
+                break;
+            default:
+                treeType = randomTreeType();
+        }
+
+        return new TreeModel(x, y, treeType);
+    }
+
+    private TreeType randomTreeType() {
+        return generator.nextBoolean() ? TreeType.PINE : TreeType.SPRUCE;
     }
 
     /**
@@ -106,21 +137,34 @@ public class DesktopPanel extends JFrame {
         makeForest();
         render();
 
-        for (int i = 0; i < 800; i++) {
-            for (int j = 0; j < 600; j++) {
-                if (forest[i][j] != null) {
-                    forest[i][j].interact(test.getWindSpeed());
-                    render();
+        while (!outOfBounds(hurricane.getCenter())) {
+
+            for (int i = 0; i < 800; i++) {
+                for (int j = 0; j < 600; j++) {
+                    if (forest[i][j] != null) {
+                        forest[i][j].interact(hurricane.getV(i, j));
+                    }
                 }
             }
+
+            render();
+            hurricane.recalculateCenter();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private boolean outOfBounds(Point point) {
+        return point.getX() > 800 || point.getY() > 600;
     }
 
     /**
      *
      */
     public void loop() {
-        Random generator = new Random();
         TreeModel tree = null;
         makeForest();
         while (true) {
