@@ -8,6 +8,9 @@ public class Tree {
     private TreeType type;
     private TreeState state = TreeState.OK;
 
+    public static int brokenTree = 0;
+    public static int fallenTree = 0;
+
     private static final Logger LOGGER = Logger.getLogger("Log");
 
     private static final double STANDARD_GRAVITY = 9.80665; // g - przyspieszenie ziemskie
@@ -50,6 +53,7 @@ public class Tree {
         this.type = type;
     }
 
+
     public TreeState getState() {
         return state;
     }
@@ -73,12 +77,14 @@ public class Tree {
                 rootResistance = getRootResistance();
         TreeState state = TreeState.OK;
 
-        if (bendingMoment > treeResistance)
+        if (bendingMoment > treeResistance) {
             state = TreeState.BROKEN;
-
-        if (bendingMoment > rootResistance)
+            brokenTree++;
+        }
+        if (bendingMoment > rootResistance) {
             state = TreeState.FALLEN;
-
+            fallenTree++;
+        }
         if (state != TreeState.OK)
             LOGGER.info(MessageFormat.format("{0} height: {1} - status: {2} |" +
                             "bending: {3}, tree res: {4}, root res: {5}",
@@ -148,5 +154,12 @@ public class Tree {
         return ((STANDARD_GRAVITY * this.rootMass * this.rootDepth) / this.massSoilRatio);
     }
 
+    public static int getBrokenTree() {
+        return brokenTree;
+    }
+
+    public static int getFallenTree() {
+        return fallenTree;
+    }
 
 }

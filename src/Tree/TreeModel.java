@@ -14,31 +14,46 @@ public class TreeModel {
     private Tree tree;
     private Color color;
 
+    public static int fallenTree = 0;
+    public static int brokenTree = 0;
+
     public TreeModel(int x, int y, TreeType type) {
-        this.x=x;
-        this.y=y;
+        this.x = x;
+        this.y = y;
         this.tree = TreeFactory.getTree(type);
         this.color = Color.GREEN;
     }
 
-    public void render(Graphics g){
+    public void render(Graphics g) {
         Graphics g2d = (Graphics2D) g.create();
 
         g2d.setColor(color);
-        g2d.fillRect(x,y,3,3);
+        g2d.fillRect(x, y, 1, 1);
     }
 
     public void interact(double windSpeed) {
         this.tree.interact(windSpeed);
         switch (this.tree.getState()) {
-            case BROKEN: this.color = Color.BLUE;
+            case BROKEN:
+                this.color = Color.BLUE;
                 break;
-            case FALLEN: this.color = Color.RED;
+            case FALLEN:
+                this.color = Color.RED;
                 break;
-            case BOTH: this.color = Color.RED;
+            case BOTH:
+                this.color = Color.RED;
                 break;
-            default: this.color = Color.GREEN;
+            default:
+                this.color = Color.GREEN;
                 break;
         }
+    }
+
+    public static int getBrokenTree() {
+        return brokenTree;
+    }
+
+    public static int getFallenTree() {
+        return fallenTree;
     }
 }
