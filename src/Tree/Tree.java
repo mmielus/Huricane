@@ -162,4 +162,7 @@ public class Tree {
         return fallenTree;
     }
 
+    public TreeType getType() {
+        return type;
+    }
 }

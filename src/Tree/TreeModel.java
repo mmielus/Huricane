@@ -35,7 +35,7 @@ public class TreeModel {
         this.tree.interact(windSpeed);
         switch (this.tree.getState()) {
             case BROKEN:
-                this.color = Color.BLUE;
+                this.color = Color.WHITE;
                 break;
             case FALLEN:
                 this.color = Color.RED;
@@ -44,7 +44,7 @@ public class TreeModel {
                 this.color = Color.RED;
                 break;
             default:
-                this.color = Color.GREEN;
+                this.color = tree.getType() == TreeType.SPRUCE ? Color.GREEN : Color.GRAY;
                 break;
         }
     }
