@@ -1,6 +1,7 @@
 package Panels;
 
 import Forest.ForestType;
+//import Tree.Tree;
 import Tree.TreeModel;
 import Tree.TreeType;
 import Components.Vortex;
@@ -17,7 +18,7 @@ public class SimulatePanel extends JFrame {
     private final static Random generator = new Random();
     public TreeModel forest[][] = new TreeModel[800][600];
     public CalibrationPanel calibrationPanel = new CalibrationPanel();
-    public DestroyedForestPhotosPanel destroyedForestPhotosPanel;
+//    public DestroyedForestPhotosPanel destroyedForestPhotosPanel;
     public Vortex hurricane;
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
@@ -192,7 +193,12 @@ public class SimulatePanel extends JFrame {
                 e.printStackTrace();
             }
         }
-        destroyedForestPhotosPanel = new DestroyedForestPhotosPanel();
+
+        double percentOfBrokenTrees = Tree.Tree.getBrokenTree() / calibrationPanel.getForestDensity() * 100;
+        double percentOfFallenTrees = Tree.Tree.getFallenTree() / calibrationPanel.getForestDensity() * 100;
+        double percentOfOkTrees = 100 - percentOfBrokenTrees - percentOfFallenTrees;
+        ResultPanel resultPanel = new ResultPanel(percentOfBrokenTrees, percentOfFallenTrees, percentOfOkTrees);
+        //destroyedForestPhotosPanel = new DestroyedForestPhotosPanel();
     }
 
     private boolean outOfBounds(Point point) {
