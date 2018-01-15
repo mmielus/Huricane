@@ -27,6 +27,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
     private JLabel fallenTreeQuantityLabel;
     private JLabel brokenTreeQuantity;
     private JLabel fallenTreeQuantity;
+    private JLabel forrestSizeLabel;
 
     private JComboBox<String> forestList;
 
@@ -36,6 +37,8 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
     private JTextField maxHurricaneRadiusTextField;
     private JTextField maxTraversalVelocityTextField;
     private JTextField maxRadialVelocityTextField;
+    private JTextField forrestSizeTextField;
+
 
     private JSlider newHurricaneAngle;
 
@@ -47,6 +50,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
     private int maxHurricaneRadius;
     private int maxTraversalVelocity;
     private int maxRadialVelocity;
+    private int forrestSize;
     private boolean checkStart;
     private boolean checkNewSimulation;
     private ForestType forestType = null;
@@ -63,14 +67,14 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
 
 
         newHurricaneAngle = new JSlider(JSlider.HORIZONTAL, 0, 360, 0);
-        newHurricaneAngle.setBounds(220, 230, 150, 50);
+        newHurricaneAngle.setBounds(220, 260, 150, 50);
         newHurricaneAngle.setMajorTickSpacing(360);
         newHurricaneAngle.setMinorTickSpacing(0);
         newHurricaneAngle.setPaintTicks(true);
         newHurricaneAngle.setPaintLabels(true);
 
         newHurricaneAngleLabel = new JLabel("Zmień kierunek huraganu");
-        newHurricaneAngleLabel.setBounds(10, 230, 250, 35);
+        newHurricaneAngleLabel.setBounds(10, 260, 250, 35);
 
         startSimulate = new JButton("START");
         startSimulate.setBounds(10, 460, 100, 40);
@@ -105,17 +109,21 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         maxRadialVelocityLabel.setText("Maksymalna prędkość radialna huraganu");
         maxRadialVelocityLabel.setBounds(10, 187, 250, 35);
 
+        forrestSizeLabel = new JLabel();
+        forrestSizeLabel.setText("Powierzchnia lasu [ha]");
+        forrestSizeLabel.setBounds(10, 217, 250, 35);
+
         brokenTreeQuantityLabel = new JLabel("Ilość złamanych drzew: ");
-        brokenTreeQuantityLabel.setBounds(10, 280, 200, 20);
+        brokenTreeQuantityLabel.setBounds(10, 310, 200, 20);
 
         fallenTreeQuantityLabel = new JLabel("Ilość wyrwanych drzew: ");
-        fallenTreeQuantityLabel.setBounds(10, 300, 200, 20);
+        fallenTreeQuantityLabel.setBounds(10, 340, 200, 20);
 
         brokenTreeQuantity = new JLabel("0");
-        brokenTreeQuantity.setBounds(220, 280, 50, 20);
+        brokenTreeQuantity.setBounds(220, 310, 50, 20);
 
         fallenTreeQuantity = new JLabel("0");
-        fallenTreeQuantity.setBounds(220, 300, 50, 20);
+        fallenTreeQuantity.setBounds(220, 340, 50, 20);
 
         forestList = new JComboBox<>(FOREST_TYPE);
         forestList.setSelectedIndex(0);
@@ -140,6 +148,9 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         maxTraversalVelocityTextField = new JTextField();
         maxTraversalVelocityTextField.setBounds(270, 159, 100, 30);
 
+        forrestSizeTextField = new JTextField();
+        forrestSizeTextField.setBounds(270, 219, 100, 30);
+
         add(newHurricaneAngleLabel);
         add(newSimulation);
         add(newHurricaneAngle);
@@ -163,6 +174,8 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         add(fallenTreeQuantity);
         add(brokenTreeQuantityLabel);
         add(fallenTreeQuantityLabel);
+        add(forrestSizeTextField);
+        add(forrestSizeLabel);
 
         setSize(500, 400);
         setBounds(860, 45, 400, 550);
@@ -196,6 +209,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
             maxHurricaneRadius = Integer.parseInt(maxHurricaneRadiusTextField.getText());
             maxTraversalVelocity = Integer.parseInt(maxTraversalVelocityTextField.getText());
             maxRadialVelocity = Integer.parseInt(maxRadialVelocityTextField.getText());
+            forrestSize = Integer.parseInt(forrestSizeTextField.getText());
 
         } else if (source == forestList) {
             if (forestList.getSelectedItem() == "Świerkowy") {
@@ -267,6 +281,10 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
 
     public boolean getCheckNewSimulation() {
         return checkNewSimulation;
+    }
+
+    public int getForrestSize() {
+        return forrestSize;
     }
 
     public void setCheckNewSimulation() {
