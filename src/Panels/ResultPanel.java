@@ -18,15 +18,15 @@ public class ResultPanel extends JFrame {
         setTitle("");
 
         brokenTreesLabel = new JLabel();
-        brokenTreesLabel.setText(percentOfBrokenTree + "% zostało złamanych przez huragan");
+        brokenTreesLabel.setText("~"+(int)percentOfBrokenTree + "% zostało złamanych przez huragan");
         brokenTreesLabel.setBounds( 5, 10, labelWidth, labelHeight);
 
         fallenTreesLabel = new JLabel();
-        fallenTreesLabel.setText(percentOfFallenTrees + "% zostało przewróconych przez huragan");
+        fallenTreesLabel.setText("~"+(int)percentOfFallenTrees + "% zostało przewróconych przez huragan");
         fallenTreesLabel.setBounds( 5, 10 + labelHeight, labelWidth, labelHeight);
 
         okTreesLabel = new JLabel();
-        okTreesLabel.setText(percentOfOkTrees + "% nie uległo zniszczeniu");
+        okTreesLabel.setText("~"+(int)percentOfOkTrees + "% nie uległo zniszczeniu");
         okTreesLabel.setBounds( 5, 10 + 2 * labelHeight, labelWidth, labelHeight);
 
         add(brokenTreesLabel);

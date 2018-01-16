@@ -82,7 +82,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         newSimulation = new JButton("NOWA");
         newSimulation.setBounds(120, 460, 100, 40);
         hurricaneVelocityLabel = new JLabel();
-        hurricaneVelocityLabel.setText("Prędkość wiatru [m/s]:");
+        hurricaneVelocityLabel.setText("Prędkość translacji [m/s]:");
         hurricaneVelocityLabel.setBounds(10, 4, 250, 35);
 
         forestDensityLabel = new JLabel();
@@ -152,7 +152,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         forrestSizeTextField.setBounds(270, 219, 100, 30);
 
         add(newHurricaneAngleLabel);
-        add(newSimulation);
+      //  add(newSimulation);
         add(newHurricaneAngle);
         add(startSimulate);
         add(forestDensityTextField);
@@ -174,8 +174,8 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
         add(fallenTreeQuantity);
         add(brokenTreeQuantityLabel);
         add(fallenTreeQuantityLabel);
-        add(forrestSizeTextField);
-        add(forrestSizeLabel);
+       // add(forrestSizeTextField);
+    //    add(forrestSizeLabel);
 
         setSize(500, 400);
         setBounds(860, 45, 400, 550);
@@ -209,7 +209,7 @@ public class CalibrationPanel extends JFrame implements ActionListener, ChangeLi
             maxHurricaneRadius = Integer.parseInt(maxHurricaneRadiusTextField.getText());
             maxTraversalVelocity = Integer.parseInt(maxTraversalVelocityTextField.getText());
             maxRadialVelocity = Integer.parseInt(maxRadialVelocityTextField.getText());
-            forrestSize = Integer.parseInt(forrestSizeTextField.getText());
+       //     forrestSize = Integer.parseInt(forrestSizeTextField.getText());
 
         } else if (source == forestList) {
             if (forestList.getSelectedItem() == "Świerkowy") {

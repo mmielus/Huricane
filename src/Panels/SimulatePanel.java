@@ -18,13 +18,14 @@ public class SimulatePanel extends JFrame {
     private final static Random generator = new Random();
     public TreeModel forest[][] = new TreeModel[800][600];
     public CalibrationPanel calibrationPanel = new CalibrationPanel();
-//    public DestroyedForestPhotosPanel destroyedForestPhotosPanel;
+    //    public DestroyedForestPhotosPanel destroyedForestPhotosPanel;
     public Vortex hurricane;
     long l = System.currentTimeMillis();
     private BufferStrategy bufferstrat = null;
     private Canvas render;
     private int lit = 1;
     private int mnoz = 1;
+    public int treeQuality = 0;
 
     public SimulatePanel() {
 
@@ -66,6 +67,7 @@ public class SimulatePanel extends JFrame {
      */
     public void addTree(int x, int y, ForestType forestType) {
         forest[x][y] = createTree(x, y, forestType);
+        treeQuality++;
     }
 
     private TreeModel createTree(int x, int y, ForestType type) {
@@ -103,7 +105,7 @@ public class SimulatePanel extends JFrame {
                     tree.render(g2d);
                     a++;
                 }
-        System.out.println(a);
+        System.out.println(a+"dd");
 
 
     }
@@ -125,10 +127,12 @@ public class SimulatePanel extends JFrame {
 //        hurricane = new Vortex(200, 200, calibrationPanel.getHurricaneAngle(), calibrationPanel.getMaxHurricaneRadius(),
 //                30, 30, 10);
 
-        while (l < calibrationPanel.getForestDensity() * 100) {
+        while (l < calibrationPanel.getForestDensity() * 30) {
             addTree(generator.nextInt(800), generator.nextInt(600), calibrationPanel.getForestType());
             l++;
+
         }
+
     }
 
     /**
@@ -193,9 +197,8 @@ public class SimulatePanel extends JFrame {
                 e.printStackTrace();
             }
         }
-
-        double percentOfBrokenTrees = Tree.Tree.getBrokenTree() / calibrationPanel.getForestDensity() * 100;
-        double percentOfFallenTrees = Tree.Tree.getFallenTree() / calibrationPanel.getForestDensity() * 100;
+        double percentOfBrokenTrees = ((double)Tree.Tree.getBrokenTree() / (double)treeQuality )*100;
+        double percentOfFallenTrees = ((double)Tree.Tree.getFallenTree() / (double)treeQuality )*100;
         double percentOfOkTrees = 100 - percentOfBrokenTrees - percentOfFallenTrees;
         ResultPanel resultPanel = new ResultPanel(percentOfBrokenTrees, percentOfFallenTrees, percentOfOkTrees);
         //destroyedForestPhotosPanel = new DestroyedForestPhotosPanel();
